@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html>
+    <head>
+
+        <title>HR/Manager Dashboard</title>
+          <style>
+            body{
+                text-align: center;
+                background-color: rgb(159, 252, 221);
+            }
+            table{
+                margin-left: 300px;
+                padding: 3px;
+            }
+        </style>
+    </head>
+    <body>
+        <h1>HR / Manager Dashboard</h1>
+        <table  border="1" cellspacing="0">
+            <thead>
+              <tr>
+                <th>Employee Name</th>
+                <th>Employee Email</th>
+                <th>Department</th>
+                <th>Subject</th>
+                <th>Description</th>              
+                <th>Status</th>
+                <th>Remarks</th>
+                </tr>
+            </thead>
+            <tbody  id="tabledata"></tbody>
+        </table>
+        <a href="index.html">Home</a>
+    </body>
+<script>
+function getData() {
+    try {
+        return JSON.parse(localStorage.getItem("empuser")) || [];
+    } catch (e) {
+        console.error("Invalid JSON data");
+        return [];
+    }
+}
+
+function displayQuery() {
+    let data = getData();
+    let table = document.getElementById("tabledata");
+
+    table.innerHTML = "";
+
+    if (data.length === 0) {
+        table.innerHTML = `<tr><td colspan="7">No queries found</td></tr>`;
+        return;
+    }
+
+    data.forEach((e, index) => {
+        table.innerHTML += `
+            <tr>
+                <td>${e.empname || ""}</td>
+                <td>${e.empmail || ""}</td>
+                <td>${e.empdep || ""}</td>
+                <td>${e.subject || ""}</td>
+                <td>${e.equeries || ""}</td>
+                <td>${e.status || "Pending"}</td>
+                <td>
+                    <button onclick="resolveQuery(${index})">
+                        Resolve
+                    </button>
+                </td>
+            </tr>
+        `;
+    });
+}
+
+function resolveQuery(index) {
+    let data = getData();
+    if (!data[index]) return;
+    data[index].status = "Resolved";
+    localStorage.setItem("empuser", JSON.stringify(data));
+    displayQuery();
+}
+// Load data when page opens
+window.onload = displayQuery;
+</script>

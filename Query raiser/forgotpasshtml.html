@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Reset password page</title>
+    <style>
+        body{
+    margin:0;
+    padding:0;
+
+    font-family:'Segoe UI',sans-serif;
+
+    background:#f4f4f4;
+
+    display:flex;
+
+    justify-content:center;
+
+    align-items:center;
+
+    min-height:100vh;
+}
+
+/* RESET BOX */
+
+.box{
+
+    width:420px;
+
+    padding:30px;
+
+    background:white;
+
+    border-radius:20px;
+
+    box-shadow:0px 8px 25px rgba(0,0,0,0.15);
+
+    box-sizing:border-box;
+}
+
+/* HEADING */
+
+h2{
+
+    text-align:center;
+
+    color:#222;
+
+    margin-bottom:25px;
+
+    font-size:28px;
+}
+
+/* LABEL */
+
+label{
+
+    display:block;
+
+    color:#222;
+
+    font-weight:bold;
+
+    margin-bottom:8px;
+}
+
+/* INPUTS */
+
+input[type="email"],
+input[type="text"]{
+
+    width:100%;
+
+    padding:12px;
+
+    margin-bottom:18px;
+
+    border:1px solid #ccc;
+
+    border-radius:10px;
+
+    font-size:15px;
+
+    box-sizing:border-box;
+}
+
+/* INPUT FOCUS */
+
+input:focus{
+
+    outline:none;
+
+    border:2px solid #007bff;
+}
+
+/* BUTTON */
+
+button{
+
+    width:100%;
+
+    padding:12px;
+
+    margin-top:8px;
+
+    border:none;
+
+    border-radius:10px;
+
+    background:linear-gradient(to right,#00c6ff,#0072ff);
+
+    color:white;
+
+    font-size:16px;
+
+    font-weight:bold;
+
+    cursor:pointer;
+
+    transition:0.3s;
+}
+
+button:hover{
+
+    transform:translateY(-2px);
+
+    background:linear-gradient(to right,#0072ff,#00c6ff);
+}
+
+/* BACK LINK */
+
+a{
+
+    display:block;
+
+    text-align:center;
+
+    margin-top:18px;
+
+    color:#0072ff;
+
+    text-decoration:none;
+
+    font-weight:bold;
+}
+
+a:hover{
+
+    text-decoration:underline;
+}
+</style>
+        <script>
+
+        function forgotpassword() {
+
+    let email = document.getElementById("umail").value.trim();
+    let newpass = document.getElementById("npass").value.trim();
+    let conpass = document.getElementById("confirmpass").value.trim();
+
+    if (!email || !newpass || !conpass) {
+        alert("Fill all fields");
+        return;
+    }
+
+    if (newpass !== conpass) {
+        alert("Password mismatch");
+        return;
+    }
+
+    let users = JSON.parse(localStorage.getItem("users")) || [];
+
+    let found = false;
+
+    for (let i = 0; i < users.length; i++) {
+
+        console.log(users[i].emailid, email); // DEBUG
+
+        if (users[i].emailid === email) {
+            users[i].pass = newpass;
+            found = true;
+            break;
+        }
+    }
+
+    if (found) {
+        localStorage.setItem("users", JSON.stringify(users));
+        alert("Password reset successful!");
+    } else {
+        alert("User not found");
+    }
+}
+        </script>
+    </head>
+    <body>
+        
+        <div class="box">
+        <h2>Reset Your Password</h2>
+         <label for="email">Email</label><br>
+        <input type="email" name="useremail" id="umail" placeholder="Enter your email" required><br>
+        <label for="new password">New password</label><br>
+        <input type="text" name="newpass" id="npass" placeholder="Enter your new password" required><br>
+        <label for="nconpass">confirm password</label><br>
+        <input type="text" name="nconpass" id="confirmpass" placeholder="Re enter your password" required><br>
+        <button type="submit" onclick="forgotpassword()">Reset password</button>
+        <a href="index.html"> Back to login  </a>
+        </div>
+    </body>
+</html>

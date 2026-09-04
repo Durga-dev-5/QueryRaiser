@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Register Page</title>
+        <style>
+            body{
+    margin:0;
+    padding:0;
+    font-family:'Segoe UI',sans-serif;
+
+    background:#f4f4f4;
+
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+    align-items:center;
+
+    min-height:100vh;
+}
+
+h1{
+    color:#222;
+    font-size:42px;
+    margin-bottom:15px;
+    text-shadow:2px 2px 10px lightgray;
+}
+
+/* LOGO */
+
+.logo{
+    position:fixed;
+    top:15px;
+    left:20px;
+    z-index:1000;
+}
+
+.logo img{
+    width:75px;
+}
+
+/* REGISTER BOX */
+
+.main{
+
+    width:430px;
+
+    padding:30px;
+
+    background:white;
+
+    border-radius:20px;
+
+    box-shadow:0px 8px 25px rgba(0,0,0,0.15);
+
+    box-sizing:border-box;
+}
+
+/* HEADING */
+
+h2{
+    text-align:center;
+    color:#222;
+
+    margin-bottom:20px;
+}
+
+/* LABEL */
+
+label{
+    display:block;
+
+    color:#222;
+
+    font-weight:bold;
+
+    margin-bottom:8px;
+}
+
+/* INPUTS */
+
+input[type="text"],
+input[type="email"],
+input[type="password"],
+select{
+
+    width:100%;
+
+    padding:12px;
+
+    margin-bottom:15px;
+
+    border:1px solid #ccc;
+
+    border-radius:10px;
+
+    font-size:15px;
+
+    box-sizing:border-box;
+}
+
+/* INPUT FOCUS */
+
+input:focus,
+select:focus{
+
+    outline:none;
+
+    border:2px solid #007bff;
+}
+
+/* BUTTON */
+
+button{
+
+    width:100%;
+
+    padding:12px;
+
+    margin-top:10px;
+
+    border:none;
+
+    border-radius:10px;
+
+    background:linear-gradient(to right,#00c6ff,#0072ff);
+
+    color:white;
+
+    font-size:16px;
+
+    font-weight:bold;
+
+    cursor:pointer;
+
+    transition:0.3s;
+}
+
+button:hover{
+
+    transform:translateY(-2px);
+
+    background:linear-gradient(to right,#0072ff,#00c6ff);
+}
+        </style>
+       <script>
+  function registeruser(){
+  let uname = document.getElementById("username").value.trim();
+  let uemail = document.getElementById("Emailid").value.trim();
+  let upassword = document.getElementById("pass").value.trim();
+  let uconpass = document.getElementById("conpass").value.trim();
+  let urole = document.getElementById("roleopt").value;
+
+  if (!uname || !uemail || !upassword || !uconpass || !urole) {
+    alert("Fill all fields");
+    return;
+  }
+
+  if (upassword !== uconpass) {
+    alert("Password mismatch");
+    return;
+  }
+
+  let users = JSON.parse(localStorage.getItem("users")) || [];
+
+  // prevent duplicate email
+  let exists = users.find(u => u.emailid === uemail);
+  if (exists) {
+    alert("User already exists");
+    return;
+  }
+
+  users.push({
+    emailid: uemail,
+    pass: upassword,
+    roles: urole
+  });
+
+  localStorage.setItem("users", JSON.stringify(users));
+
+  alert("Registered successfully");
+  window.location.href = "index.html";
+}
+       </script>
+    </head>
+    <body>
+        <h1>Tech Company</h1>
+        <div class="logo">
+            <img src="logo img.png" alt="compamy logo">
+        </div>
+        <div class="main">
+            <h2>Register Here</h2>
+            <label for="Name">Name</label>
+            <input type="text" name="Name" id="username" placeholder="Enter your Name" required><br>
+            <label for="email">Email ID</label>
+            <input type="email" name="email" id="Emailid" placeholder="Enter your Email ID" required><br>
+            <label for="Password">Password</label>
+            <input type="password" name="password" id="pass" placeholder="Enter your password" required><br>
+            <label for="Conpassword">Confirm Password</label>
+            <input type="text" name="Conpassword" id="conpass" placeholder="ReEnter Your Password" required><br>
+            <label for="role">Role   </label>
+             <select name="role" id="roleopt">
+                <option value="select" hidden>Select</option>
+                <option value="Employee">Employee</option>
+                <option value="Manager">Manager</option>
+                <option value="HR">HR</option><br>
+            </select><br>
+            <button type="submit" onclick="registeruser()">Register</button>
+        </div>
+    </body>
+</html>

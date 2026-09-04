@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Login Page</title>
+    <style>
+        body{
+    margin:0;
+    padding:0;
+    font-family:'Segoe UI',sans-serif;
+
+    background:#f4f4f4;
+
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+    align-items:center;
+    min-height:100vh;
+}
+
+h1{
+    color:#222;
+    font-size:42px;
+    margin-bottom:15px;
+    text-shadow:2px 2px 10px lightgray;
+}
+
+.logo{
+    position:fixed;
+    top:15px;
+    left:20px;
+    z-index:1000;
+}
+
+.logo img{
+    width:75px;
+}
+.mainbox{
+    width:420px;
+
+    padding:25px 30px;
+
+    background:white;
+    border-radius:20px;
+    box-shadow:0px 8px 25px rgba(0,0,0,0.15);
+
+    box-sizing:border-box;
+
+    height:auto;       /* content size ku match aagum */
+    overflow:hidden;   /* scroll remove */
+}
+
+h2{
+    text-align:center;
+    color:#222;
+    margin-bottom:15px;
+}
+
+/* LABELS */
+
+label{
+    color:#222;
+    font-weight:bold;
+    display:block;
+    margin-bottom:8px;
+}
+
+/* INPUTS */
+
+input[type="email"],
+input[type="password"],
+select{
+
+    width:100%;
+    padding:12px;
+
+    border:1px solid #ccc;
+
+    border-radius:10px;
+
+    margin-bottom:12px;
+
+    font-size:15px;
+
+    box-sizing:border-box;
+}
+
+input:focus,
+select:focus{
+
+    outline:none;
+
+    border:2px solid #007bff;
+}
+
+/* BUTTONS */
+
+button{
+
+    width:100%;
+
+    padding:12px;
+
+    margin-top:8px;
+
+    border:none;
+
+    border-radius:10px;
+
+    background:linear-gradient(to right,#00c6ff,#0072ff);
+
+    color:white;
+
+    font-size:16px;
+
+    font-weight:bold;
+
+    cursor:pointer;
+
+    transition:0.3s;
+}
+
+button:hover{
+
+    background:linear-gradient(to right,#0072ff,#00c6ff);
+
+    transform:translateY(-2px);
+}
+
+a{
+    text-decoration:none;
+}
+    </style>
+    <script>
+           let defaultUsers = [
+  { emailid: "durga@gmail.com", pass: "12345", roles: "Employee" },
+  { emailid: "kanaga@gmail.com", pass: "123", roles: "Manager" },
+  { emailid: "baskar@gmail.com", pass: "814845", roles: "HR" }
+];
+
+// store only if empty
+if (!localStorage.getItem("users")) {
+  localStorage.setItem("users", JSON.stringify(defaultUsers));
+}
+function loginfun() {
+
+  let useremail = document.getElementById("emailid").value.trim();
+  let userpass = document.getElementById("pass").value.trim();
+  let userrole = document.getElementById("roles").value;
+
+  let users = JSON.parse(localStorage.getItem("users")) || [];
+
+  let user = users.find(u =>
+    u.emailid === useremail &&
+    u.pass === userpass &&
+    u.roles === userrole
+  );
+
+  if (user) {
+    alert("Login success");
+
+    if (userrole === "Employee") {
+      window.location.href = "empdashboard.html";
+    } else {
+      window.location.href = "hrdash html.html";
+    }
+  } else {
+    alert("Login failed");
+  }
+}
+   
+    </script>
+   
+</head>
+    <body>
+        <h1>Tech Company</h1>
+        <div class="logo">
+            <img src="logo img.png" alt="compamy logo">
+        </div>
+        
+            <div class="mainbox">
+            <h2>Login page</h2>
+           <label for="email">Email   </label><br>
+           <input type="email" name="email" id="emailid" placeholder="Enter your Email" required><br>
+            <label for="password">Password    </label><br>
+             <input type="password" name="password" id="pass" placeholder="Enter your password" required><br>
+            <label  for="role">Role   </label> <select name="role" id="roles" >
+                <option value="select" hidden>Select</option>
+                <option value="Employee">Employee</option>
+                <option value="Manager">Manager</option>
+                <option value="HR">HR</option><br>
+            </select><br>
+            <button type="submit" onclick="loginfun()">Login</button>
+            <a href="reghtml.html">
+            <button type="submit" onclick="registeruser()">Create Account</button></a>
+            <a href="forgotpasshtml.html">
+            <button type="submit" onclick="forgotpassword()">Forgot Password</button></a>
+            
+        </div>
+    </body>
+</html>
