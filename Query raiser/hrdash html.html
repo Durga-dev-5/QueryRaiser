@@ -3,20 +3,60 @@
     <head>
 
         <title>HR/Manager Dashboard</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
           <style>
-            body{
-                text-align: center;
-                background-color: rgb(159, 252, 221);
-            }
-            table{
-                margin-left: 300px;
-                padding: 3px;
-            }
+body {
+    margin: 0;
+    padding: 20px;
+    text-align: center;
+    background-color: rgb(159, 252, 221);
+    font-family: 'Segoe UI', sans-serif;
+}
+
+.table-container {
+    width: 100%;
+    overflow-x: auto;
+    margin: 20px auto;
+}
+
+table {
+    width: 100%;
+    min-width: 850px;
+    border-collapse: collapse;
+}
+
+th, td {
+    padding: 10px;
+    border: 1px solid black;
+    word-break: break-word;
+}
+
+button {
+    padding: 10px;
+    background: linear-gradient(to right,#00c6ff,#0072ff);
+    color: white;
+    border: none;
+    border-radius: 8px;
+}
+
+@media screen and (max-width: 600px) {
+    body {
+        padding: 12px;
+    }
+
+    h1 {
+        font-size: 25px;
+    }
+
+    .table-container {
+        overflow-x: auto;
+    }
+}
         </style>
     </head>
     <body>
-        <h1>HR / Manager Dashboard</h1>
-        <table  border="1" cellspacing="0">
+        <div class="table-container">
+    <table border="1" cellspacing="0">
             <thead>
               <tr>
                 <th>Employee Name</th>
@@ -28,8 +68,9 @@
                 <th>Remarks</th>
                 </tr>
             </thead>
-            <tbody  id="tabledata"></tbody>
-        </table>
+            <tbody id="tabledata"></tbody>
+    </table>
+</div>
         <a href="index.html">Home</a>
     </body>
 <script>

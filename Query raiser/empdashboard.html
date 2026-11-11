@@ -2,6 +2,7 @@
 <html>
     <head>
         <title>Employee Dashboard</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <style>
             body{
     margin:0;
@@ -179,6 +180,82 @@ button:hover{
 
     box-sizing:border-box;
 }
+/* RESPONSIVE DESIGN */
+
+* {
+    box-sizing: border-box;
+}
+
+html {
+    width: 100%;
+    overflow-x: hidden;
+}
+
+body {
+    width: 100%;
+    min-width: 0;
+}
+
+/* MOBILE VIEW */
+
+@media screen and (max-width: 600px) {
+
+    body {
+        padding: 15px;
+    }
+
+    h1 {
+        font-size: 28px;
+        margin-top: 65px;
+        margin-bottom: 20px;
+    }
+
+    .logo {
+        top: 10px;
+        left: 10px;
+    }
+
+    .logo img {
+        width: 50px;
+    }
+
+    button {
+        max-width: 100%;
+        font-size: 15px;
+    }
+
+    input,
+    select,
+    textarea {
+        max-width: 100%;
+        font-size: 16px;
+    }
+}
+@media screen and (max-width: 600px) {
+
+    .container {
+        width: 100%;
+        max-width: 470px;
+        padding: 22px 18px;
+        margin: 20px auto;
+    }
+
+    #historySection {
+        width: 100%;
+        max-width: 470px;
+        margin: 20px auto;
+        padding: 15px;
+    }
+
+    .container button {
+        width: 100%;
+        margin: 8px 0;
+    }
+
+    textarea {
+        width: 100%;
+    }
+}
         </style>
         <script>
             function raisequery(){
@@ -210,22 +287,37 @@ button:hover{
        localStorage.setItem("empuser", JSON.stringify(empuser))
        alert("Query submitted successfully!")
     }
-    function showHistory() {
+function showHistory() {
+
     let data = JSON.parse(localStorage.getItem("empuser")) || [];
+
+    let currentEmail = document.getElementById("empid").value.trim();
+
     let historyDiv = document.getElementById("historySection");
 
-    if (data.length === 0) {
+    if (currentEmail === "") {
+        alert("Please enter your email ID");
+        return;
+    }
+
+    let userQueries = data.filter(item =>
+        item.empmail === currentEmail
+    );
+
+    if (userQueries.length === 0) {
         historyDiv.innerHTML = "<p>No previous queries found.</p>";
         return;
     }
 
-    let output = "<h3>Previous Queries</h3>";
+    let output = "<h3>My Previous Queries</h3>";
 
-    data.forEach((item) => {
+    userQueries.forEach((item) => {
+
         output += `
             <div style="border:1px solid black; margin:10px; padding:10px;">
                 <p><b>Subject:</b> ${item.subject}</p>
                 <p><b>Query:</b> ${item.equeries}</p>
+                <p><b>Status:</b> ${item.status}</p>
             </div>
         `;
     });
